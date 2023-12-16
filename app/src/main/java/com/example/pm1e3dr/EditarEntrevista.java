@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,7 +70,12 @@ public class EditarEntrevista extends DialogFragment {
         Img =  v.findViewById(R.id.imageView);
         btnGrabarAudio = v.findViewById(R.id.floatingActionButton);
 
-
+         Img.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 MostrarDialosoOpciones();
+             }
+         });
         if(id_entrevista != null || id.equals("")){
             btnGuardar.setText("Actualizar Entrevista");
             obtenerEntrevista();
@@ -92,6 +98,9 @@ public class EditarEntrevista extends DialogFragment {
         }
 
         return v;
+    }
+
+    private void MostrarDialosoOpciones() {
     }
 
     private void actualizarDatos(String Orden, String Descrip, String Periodista, String Fecha) {
@@ -126,10 +135,17 @@ public class EditarEntrevista extends DialogFragment {
                 String nDescrip = documentSnapshot.getString("Descripcion");
                 String nPeriodista = documentSnapshot.getString("Periodista");
                 String nFecha = documentSnapshot.getString("Fecha");
+                String nFoto = documentSnapshot.getString("FotoURL");
                 orden.setText(nOrden);
                 descripcion.setText(nDescrip);
                 periodista.setText(nPeriodista);
                 fecha.setText(nFecha);
+                if (nFoto != null && !nFoto.isEmpty()) {
+                    Picasso.get().load(nFoto).into(Img);
+                } else {
+                    // Si la URL de la imagen es nula o vacía, puedes manejarlo aquí (por ejemplo, establecer una imagen de marcador de posición)
+                    // Picasso.get().load(R.drawable.placeholder_image).into(Img);
+                }
 
 
 
@@ -142,4 +158,7 @@ public class EditarEntrevista extends DialogFragment {
             }
         });
     }
+
+
+
 }

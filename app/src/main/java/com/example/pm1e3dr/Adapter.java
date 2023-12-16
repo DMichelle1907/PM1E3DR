@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import java.lang.annotation.Documented;
 
@@ -47,6 +49,12 @@ public class Adapter extends FirestoreRecyclerAdapter<Entrevista, Adapter.ViewHo
         holder.descripcion.setText(model.getDesrip());
         holder.periodista.setText(model.getPeriodista());
         holder.fecha.setText(model.getFecha());
+        String nFoto = model.getFotoURL();
+        if (nFoto != null && !nFoto.isEmpty()) {
+            Picasso.get().load(nFoto).into(holder.ImagenEdit);
+        } else {
+            Picasso.get().load(R.drawable.user).into(holder.ImagenEdit);
+        }
         holder.btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,7 +105,8 @@ public class Adapter extends FirestoreRecyclerAdapter<Entrevista, Adapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView orden, descripcion, periodista, fecha;
-        ImageView btnEliminar, btnActualizar;
+        ImageView btnEliminar, btnActualizar, ImagenEdit;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             orden = itemView.findViewById(R.id.txtOrden);
@@ -107,7 +116,7 @@ public class Adapter extends FirestoreRecyclerAdapter<Entrevista, Adapter.ViewHo
             btnEliminar = itemView.findViewById(R.id.btnEliminar);
 
             btnActualizar = itemView.findViewById(R.id.btnActualizar);
-
+            ImagenEdit = itemView.findViewById(R.id.ImgGuardada);
         }
     }
 }

@@ -2,8 +2,11 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="120dp">
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="30dp"
+    android:layout_marginEnd="20dp"
+    android:layout_width="390dp"
+    android:layout_height="140dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,9 +20,11 @@
 
             <TextView
                 android:id="@+id/txtOrden"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Orden" />
+                android:layout_width="70dp"
+                android:layout_height="20dp"
+                android:text="Orden"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -28,39 +33,40 @@
 
                 <TextView
                     android:id="@+id/txtFecha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:layout_width="100dp"
+                    android:layout_height="20dp"
                     android:text="Fecha" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="79dp"
                 android:orientation="horizontal">
-
-
-                <TextView
-                    android:id="@+id/txtDescripcion"
-                    android:layout_width="96dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:text="Descripción" />
-
-                <TextView
-                    android:id="@+id/txtPeriodista"
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
 
 
                 <ImageView
                     android:id="@+id/ImgGuardada"
-                    android:layout_width="90dp"
-                    android:layout_height="92dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_weight="0"
-                    tools:src="@tools:sample/avatars" />
+                    tools:src="@drawable/user" />
+
+                <TextView
+                    android:id="@+id/txtDescripcion"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:textStyle="bold"
+                    android:text="Descripción" />
+
+                <TextView
+                    android:id="@+id/txtPeriodista"
+                    android:layout_width="120dp"
+                    android:textStyle="bold"
+                    android:layout_height="20dp"
+                    android:text="TextView" />
+
 
                 <ImageView
                     android:id="@+id/btnEliminar"
