@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.example.pm1e3dr.Models.Entrevista;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -26,19 +27,38 @@ public class ActivityListE extends AppCompatActivity {
         FirestoreRecyclerOptions<Entrevista> firestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<Entrevista>
                 ().setQuery(query,Entrevista.class).build();
         mAdapter = new Adapter(firestoreRecyclerOptions, this, getSupportFragmentManager());
+
+        mAdapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                String documentId = documentSnapshot.getId();
+                openVerEntrevistaFragment(documentId);
+            }
+        });
+
         mAdapter.notifyDataSetChanged();
         mRecycle.setAdapter(mAdapter);
 
+
+    }
+    private void openVerEntrevistaFragment(String documentId) {
+        VerEntrevista verEntrevista = new VerEntrevista();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("id_entrevista", documentId);
+        verEntrevista.setArguments(bundle);
+
+        verEntrevista.show(getSupportFragmentManager(), "VerEntrevista");
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         mAdapter.startListening();
     }
 
     @Override
-    protected void onStop(){
+    protected void onStop() {
         super.onStop();
         mAdapter.stopListening();
     }

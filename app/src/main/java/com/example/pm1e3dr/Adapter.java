@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuView;
 import androidx.constraintlayout.widget.ConstraintSet;
+import com.example.pm1e3dr.Adapter.OnItemClickListener;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,10 +34,17 @@ import com.squareup.picasso.Picasso;
 import java.lang.annotation.Documented;
 
 public class Adapter extends FirestoreRecyclerAdapter<Entrevista, Adapter.ViewHolder> {
-
+    private OnItemClickListener onItemClickListener;
     private FirebaseFirestore mfirebastore = FirebaseFirestore.getInstance();
     Activity activity;
     FragmentManager fm;
+    public interface OnItemClickListener {
+        void onItemClick(DocumentSnapshot documentSnapshot, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
     public Adapter(@NonNull FirestoreRecyclerOptions<Entrevista> options, Activity actitivy, FragmentManager fm) {
         super(options);
         this.activity = actitivy;
@@ -55,12 +65,21 @@ public class Adapter extends FirestoreRecyclerAdapter<Entrevista, Adapter.ViewHo
         } else {
             Picasso.get().load(R.drawable.user).into(holder.ImagenEdit);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(documentSnapshot, holder.getAdapterPosition());
+                }
+            }
+        });
         holder.btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 eliminar(id);
             }
         });
+
 
         holder.btnActualizar.setOnClickListener(new View.OnClickListener() {
             @Override
